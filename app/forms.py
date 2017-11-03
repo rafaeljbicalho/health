@@ -1,6 +1,7 @@
 from flask_wtf import Form
 from wtforms import StringField, BooleanField
 from wtforms.validators import DataRequired
+from app import db
 
 class LoginForm(Form):
     openid = StringField('openid', validators=[DataRequired()])
