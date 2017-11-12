@@ -154,6 +154,10 @@ input[type='submit'] {
   flex: 1;
 }
 
+.error {
+  color: red;
+}
+
 /* modules/login.css */
 
 :root {

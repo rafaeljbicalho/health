@@ -18,17 +18,18 @@ from app import models
 @app.route('/')
 @app.route('/login', methods=['GET','POST'])
 def login():
+    error=None
     if request.method == 'GET':
         return render_template('login.html')
     username = request.form['username']
     password = request.form['password']
     registered_user = models.User.query.filter_by(username=username).first()
     if registered_user is None:
-        flash('Usuario invalido' , 'error')
-        return redirect(url_for('login'))
+        error = 'Usuario nao cadastrado'
+        return render_template('login.html', error=error)
     if not registered_user.check_password(password):
-        flash('Senha invalida','error')
-        return redirect(url_for('login'))
+        error = 'Senha esta incorreta'
+        return render_template('login.html', error=error)
     #login_user(registered_user)
     return render_template('teste.html', name=username)
 
