@@ -30,12 +30,15 @@ class User(db.Model):
     def check_password(self , password):
         return check_password_hash(self.password , password)
 
+    @property
     def is_authenticated(self):
         return True
 
+    @property
     def is_active(self):
         return True
 
+    @property
     def is_anonymous(self):
         return False
 

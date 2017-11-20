@@ -1,6 +1,6 @@
-#-*- coding: utf-8 -*-
+    #-*- coding: utf-8 -*-
 from flask import render_template, flash, redirect, jsonify, session, url_for, g, abort, request
-from app import app
+from app import app, lm
 from .forms import LoginForm, RegistrationForm
 from flask_login import login_user, logout_user, current_user, login_required
 from app import db, models
@@ -15,8 +15,28 @@ import sys
 from pprint import pprint
 from app import models
 
-@app.route('/login')
-@app.route('/', methods=['GET','POST'])
+@app.before_request
+def before_request():
+    g.user = current_user
+
+@app.route('/logout')
+def logout():
+    logout_user()
+    return redirect(url_for('login'))
+
+@lm.user_loader #Carrega o id do usuario no banco de dados
+def load_user(id):
+    return models.User.query.get(int(id))
+
+@app.route('/menu', methods=['GET', 'POST'])
+@login_required
+def menu():
+    user = g.user
+    if request.method == 'GET':
+        return render_template('menu.html', user=user)
+
+@app.route('/', methods=['GET', 'POST'])
+@app.route('/login', methods=['GET','POST'])
 def login():
     error=None
     if request.method == 'GET':
@@ -30,12 +50,8 @@ def login():
     if not registered_user.check_password(password):
         error = 'Senha esta incorreta'
         return render_template('login.html', error=error)
-    #login_user(registered_user)
-    return render_template('teste.html', name=username)
-
-@app.route('/user/<name>')
-def user(name):
-   return render_template('teste.html', name=name)
+    login_user(registered_user)
+    return render_template('menu.html', user=registered_user)
 
 @app.route('/cadastro', methods=['GET', 'POST'])
 def register():
@@ -50,16 +66,20 @@ def register():
         data_nascimento1 = request.form['data_nascimento']
         peso1     = request.form['peso']
         altura1     = request.form['altura']
-        # print "usuario", nome
-        # print "senha", senha
-        # print "cpf", cpf1
-        # print "sexo", sexo1
-        # print "nascimento", data_nascimento1
-        # print "peso", peso1
-        # print "altura", altura1
         user = models.User(username=nome,password=senha,cpf=cpf1,sexo=sexo1,data_nascimento=data_nascimento1,
-                           peso=peso1,altura=altura1)
-        print "user:", user
-        db.session.add(user)
+                           peso=peso1,altura=altura1) #Pega todos os dados inseridos para add ao banco.
+        db.session.add(user) #Adiciona usuario ao banco.
         db.session.commit()
         return redirect(url_for('login'))
+
+@app.route('/treino', methods=['GET', 'POST'])
+def treino():
+    user = g.user
+    if request.method == 'GET':
+        return render_template('treino.html', user=user)
+
+@app.route('/historico', methods=['GET', 'POST'])
+def historico():
+    user = g.user
+    if request.method == 'GET':
+        return render_template('historico.html', user=user)

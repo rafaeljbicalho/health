@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>Projeto Gym - Treino</title>
+  <link rel=stylesheet type=text/css href="/static/style.css">
+</head>
+
+<body>
+  <div class="logo">
+    <center>
+      <!-- <img src="{{ url_for('static', filename = 'cardiogram.png') }}"
+    width="50" height="50"> -->
+
+      <div>
+        <a href="{{ url_for('menu') }}">Home</a>
+        {% if g.user.is_authenticated %} | <a href="{{ url_for('logout') }}">Logout</a> {% endif %}
+        <h4>Bem-vindo, {{ user.username }}!</h4>
+      </div>
+
+      <h4>Olá, sou o historico de treinos</h4>
