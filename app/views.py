@@ -73,13 +73,26 @@ def register():
         return redirect(url_for('login'))
 
 @app.route('/treino', methods=['GET', 'POST'])
+@login_required
 def treino():
     user = g.user
     if request.method == 'GET':
         return render_template('treino.html', user=user)
+    if request.method == 'POST':
+        bpm = request.form['bpm']
+        return render_template('analise.html', bpm=bpm, user=user)
 
 @app.route('/historico', methods=['GET', 'POST'])
+@login_required
 def historico():
     user = g.user
     if request.method == 'GET':
         return render_template('historico.html', user=user)
+
+
+@app.route('/analise', methods=['GET', 'POST'])
+@login_required
+def analise():
+    user = g.user
+    if request.method == 'GET':
+        return render_template('analise.html', user=user)
