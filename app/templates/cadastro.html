@@ -3,6 +3,9 @@
   <head>
     <meta charset="utf-8">
      <title>Projeto Gym - Cadastro</title>
+     <div>
+       <a href="{{ url_for('login') }}">Login</a>
+     </div>
      <link rel=stylesheet type=text/css href="/static/style.css">
   </head>
   <body>
@@ -12,6 +15,7 @@
     width="50" height="50">
 <div class="grid">
   <form action="" method=post class="form login">
+
     <h2>Bem-vindo ao Projeto Gym</h2>
 
 <form method=post>
@@ -39,17 +43,17 @@
   <!-- Data de Nascimento -->
   <div class="form__field">
     <label for="login__username"><svg class="icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#user"></use></svg><span class="hidden">Username</span></label>
-    <input id="data_nascimento" type="text" name="data_nascimento" class="form__input" placeholder="Data de nascimento" required>
+    <input id="data_nascimento" type="text" name="data_nascimento" class="form__input" placeholder="Inserir ano de nascimento" required>
   </div>
   <!-- Peso -->
   <div class="form__field">
     <label for="login__username"><svg class="icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#user"></use></svg><span class="hidden">Username</span></label>
-    <input id="peso" type="text" name="peso" class="form__input" placeholder="Peso" required>
+    <input id="peso" type="text" name="peso" class="form__input" placeholder="Peso em kg" required>
   </div>
   <!-- Altura -->
   <div class="form__field">
     <label for="login__username"><svg class="icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#user"></use></svg><span class="hidden">Username</span></label>
-    <input id="altura" type="text" name="altura" class="form__input" placeholder="Altura" required>
+    <input id="altura" type="text" name="altura" class="form__input" placeholder="Altura em cm" required>
   </div>
 
   <p><input type=submit value=Cadastrar>

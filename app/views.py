@@ -76,11 +76,20 @@ def register():
 @login_required
 def treino():
     user = g.user
+    intensidade_max = "90-100%"
     if request.method == 'GET':
         return render_template('treino.html', user=user)
     if request.method == 'POST':
         bpm = request.form['bpm']
-        return render_template('analise.html', bpm=bpm, user=user)
+        ano = int(user.data_nascimento)
+        idade_aluno = 2017 - ano
+        zona_max = 220 - idade_aluno
+        if zona_max >= 180 <= 191:
+           teste = zona_max
+           intensidade = unicode(intensidade_max, 'utf-8')
+           treino = "Realizar treino maximo"
+    return render_template('analise.html', bpm=bpm, user=user,
+                           intensidade=intensidade,teste=teste, treino=treino)
 
 @app.route('/historico', methods=['GET', 'POST'])
 @login_required
