@@ -1,7 +1,7 @@
     #-*- coding: utf-8 -*-
 from flask import render_template, flash, redirect, jsonify, session, url_for, g, abort, request
 from app import app, lm
-from .forms import LoginForm, RegistrationForm
+from .forms import LoginForm, RegistrationForm, ZonaForm
 from flask_login import login_user, logout_user, current_user, login_required
 from app import db, models
 from .models import User
@@ -76,15 +76,16 @@ def register():
 @login_required
 def treino():
     user = g.user
+    if request.method == 'GET':
+        return render_template('treino.html', user=user)
     zonaAlvoMax = unicode("Máximo(90-100%)", 'utf-8')
     zonaAlvoIntenso = "80-90%"
     zonaAlvoModerado = "70-80%"
     zonaAlvoLeve = "60-70% "
     zonaAlvoMuitoLeve = "50-60% "
-    if request.method == 'GET':
-        return render_template('treino.html', user=user)
     if request.method == 'POST':
         bpm = request.form['bpm']
+        #tipoTreino = request.form['tipoTreino']
         ano = int(user.data_nascimento)
         idade_aluno = 2017 - ano
         zona_max = 220 - idade_aluno
@@ -98,7 +99,8 @@ def treino():
         anaerobicoMaxima = zona_max*0.89
         esforcoMinimo = zona_max*0.9
         esforcoMaximo = zona_max
-    return render_template('analise.html', bpm=bpm, user=user,zona_max=zona_max,
+        #print "AQUI COM:", tipoTreino
+    return render_template('treino.html', bpm=bpm, user=user,zona_max=zona_max,
                            atividadeModeradaMaximo=atividadeModeradaMaximo,
                            atividadeModeradaMinimo=atividadeModeradaMinimo,
                            controleDePesoMinimo=controleDePesoMinimo,
@@ -110,17 +112,22 @@ def treino():
                            esforcoMinimo=esforcoMinimo,
                            esforcoMaximo=esforcoMaximo)
 
+# @app.route('/analise', methods=['GET', 'POST'])
+# @login_required
+# def analise():
+#     user = g.user
+#     if request.method == 'GET':
+#         print "entrei na analise"
+#         return redirect('analise.html')
+#     if request.method == 'POST':
+#         print "entrei na analise2"
+#         teste = request.form['tipoTreino']
+#         print "AGORA FOI COM:", teste
+#     return redirect(url_for('menu'))
+
 @app.route('/historico', methods=['GET', 'POST'])
 @login_required
 def historico():
     user = g.user
     if request.method == 'GET':
         return render_template('historico.html', user=user)
-
-
-@app.route('/analise', methods=['GET', 'POST'])
-@login_required
-def analise():
-    user = g.user
-    if request.method == 'GET':
-        return render_template('analise.html', user=user)

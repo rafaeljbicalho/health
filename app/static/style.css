@@ -93,7 +93,7 @@ body {
   font-weight: var(--bodyFontWeight);
   height: 100%;
   line-height: var(--bodyLineHeight);
-  margin: 0;
+  margin: 50;
   min-height: 100vh;
 }
 
@@ -313,7 +313,7 @@ h4.teste {
   color: #4CAF50;
   font-family: Arial, Helvetica, sans-serif;
   font-weight: bold;
-  font-size: 28px;
+  font-size: 32px;
 }
 
 #customers {
