@@ -5,15 +5,15 @@
      <title>Projeto Gym - Login</title>
      <link rel=stylesheet type=text/css href="/static/style.css">
   </head>
-  <body background="{{ url_for('static', filename='login.png') }}">
+  <body background="{{ url_for('static', filename='login2.png') }}">
     <div class="logo">
     <center>
-    <img src="{{ url_for('static', filename = 'cardiogram.png') }}"
+    <img src="{{ url_for('static', filename = 'dumbbell.png') }}"
     width="50" height="50">
 <div class="grid">
   <form action="" method=post class="form login">
-    <h2>Bem-vindo ao Projeto Gym</h2>
-    <h4>Faça seu login:</h4>
+    <p class="login">Bem-vindo ao Projeto Gym</p>
+    <h3>Faça seu login:</h3>
 
     <!-- erro de entrada de dados do login  -->
     {% if error %}

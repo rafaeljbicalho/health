@@ -76,7 +76,11 @@ def register():
 @login_required
 def treino():
     user = g.user
-    intensidade_max = "90-100%"
+    zonaAlvoMax = unicode("Máximo(90-100%)", 'utf-8')
+    zonaAlvoIntenso = "80-90%"
+    zonaAlvoModerado = "70-80%"
+    zonaAlvoLeve = "60-70% "
+    zonaAlvoMuitoLeve = "50-60% "
     if request.method == 'GET':
         return render_template('treino.html', user=user)
     if request.method == 'POST':
@@ -84,12 +88,27 @@ def treino():
         ano = int(user.data_nascimento)
         idade_aluno = 2017 - ano
         zona_max = 220 - idade_aluno
-        if zona_max >= 180 <= 191:
-           teste = zona_max
-           intensidade = unicode(intensidade_max, 'utf-8')
-           treino = "Realizar treino maximo"
-    return render_template('analise.html', bpm=bpm, user=user,
-                           intensidade=intensidade,teste=teste, treino=treino)
+        atividadeModeradaMinimo = zona_max*0.5
+        atividadeModeradaMaximo = zona_max*0.59
+        controleDePesoMinimo = zona_max*0.6
+        controleDePesoMaximo = zona_max*0.69
+        aerobicaMinima = zona_max*0.7
+        aerobicaMaxima = zona_max*0.79
+        anaerobicoMinima = zona_max*0.8
+        anaerobicoMaxima = zona_max*0.89
+        esforcoMinimo = zona_max*0.9
+        esforcoMaximo = zona_max
+    return render_template('analise.html', bpm=bpm, user=user,zona_max=zona_max,
+                           atividadeModeradaMaximo=atividadeModeradaMaximo,
+                           atividadeModeradaMinimo=atividadeModeradaMinimo,
+                           controleDePesoMinimo=controleDePesoMinimo,
+                           controleDePesoMaximo=controleDePesoMaximo,
+                           aerobicaMinima=aerobicaMinima,
+                           aerobicaMaxima=aerobicaMaxima,
+                           anaerobicoMinima=anaerobicoMinima,
+                           anaerobicoMaxima=anaerobicoMaxima,
+                           esforcoMinimo=esforcoMinimo,
+                           esforcoMaximo=esforcoMaximo)
 
 @app.route('/historico', methods=['GET', 'POST'])
 @login_required
